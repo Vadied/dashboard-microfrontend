@@ -3,12 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const commonConfig = require("./webpack.common");
 
 const config = {
-  mode: "development",
+  mode: "production",
   port: 8081,
   historyApiFallback: {
-    index: "index.html",
+    index: "inex.html",
   },
-  plugins: [new HtmlWebpackPlugin({ template: "./public/index.html" })],
+  plugins: [new HtmlWebpackPlugin({ tempalte: "./public/index.html" })],
 };
 
 module.exports = merge(commonConfig, config);
