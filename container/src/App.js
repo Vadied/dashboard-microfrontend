@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useHistory } from "react-router-dom";
+import { Router, Routes, Route } from "react-router-dom";
 import {
   StylesProvider,
   createGenerateClassName,
@@ -7,17 +8,25 @@ import {
 
 import Header from "./components/Header";
 import MarketingApp from "./components/MarketingApp";
+import AuthApp from "./components/AuthApp";
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "co",
 });
 
 const App = () => {
+  const history = useHistory();
   return (
     <BrowserRouter>
       <StylesProvider generateClassName={generateClassName}>
         <Header />
-        <MarketingApp />
+        <Router history={history}>
+          <Routes>
+            <Route path="/" element={<MarketingApp />}>
+              <Route path="/auth" element={<AuthApp />} />
+            </Route>
+          </Routes>
+        </Router>
       </StylesProvider>
     </BrowserRouter>
   );

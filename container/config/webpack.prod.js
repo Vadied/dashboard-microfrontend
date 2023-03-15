@@ -4,7 +4,7 @@ const commonConfig = require("./webpack.common");
 
 const domain = process.env.PRODUCTION_DOMAIN;
 const config = {
-  mode: "development",
+  mode: "production",
   output: { filename: "[name].[contenthash].js" },
   plugins: [
     new ModuleFederationPlugin({
