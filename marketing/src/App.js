@@ -1,23 +1,26 @@
 import React from "react";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { StylesProvider } from "@material-ui/core";
 
-import Landing from "./components/Landing"
-import Pricing from "./components/Pricing"
+import Landing from "./components/Landing";
+import Pricing from "./components/Pricing";
 
 const App = () => {
-    return (
+  console.log("test marketing");
+  return (
     <div>
-        <StylesProvider>
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/pricing" component={Pricing} />
-                    <Route path="/landing" component={Landing} />
-                </Switch>
-            </BrowserRouter>
-        </StylesProvider>
+      <StylesProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Landing />}>
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/landing" element={<Landing />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </StylesProvider>
     </div>
-    )
-}
+  );
+};
 
-export default App
+export default App;

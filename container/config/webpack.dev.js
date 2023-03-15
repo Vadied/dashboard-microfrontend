@@ -4,9 +4,11 @@ const commonConfig = require("./webpack.common");
 
 const config = {
   mode: "development",
-  port: 8081,
-  historyApiFallback: {
-    index: "index.html",
+  devServer: {
+    port: 8080,
+    historyApiFallback: {
+      index: "index.html",
+    },
   },
   plugins: [new HtmlWebpackPlugin({ template: "./public/index.html" })],
 };

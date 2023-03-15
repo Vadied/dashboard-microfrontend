@@ -1,13 +1,13 @@
 module.exports = {
   module: {
-    rule: [
+    rules: [
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
         use: {
-          loader: "bable-loader",
+          loader: "babel-loader",
           options: {
-            preset: ["@babel/preset-react", "@babel/preset-env"],
+            presets: ["@babel/preset-react", "@babel/preset-env"],
             plugins: ["@babel/plugin-transform-runtime"],
           },
         },
