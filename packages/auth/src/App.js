@@ -8,15 +8,15 @@ import Signup from "./components/Signup";
 const generateClassName = createGenerateClassName({
   productionPrefix: "au",
 });
-const App = ({ history }) => {
+const App = ({ history, onSignIn }) => {
   return (
     <div>
       <StylesProvider generateClassName={generateClassName}>
         <Router history={history}>
           <Routes>
-            <Route path="/auth" element={<Signin />}>
-              <Route path="/signin" element={<Signin />} />
-              <Route path="/signup" element={<Signup />} />
+            <Route path="/auth" element={<Signin onSignIn={onSignIn} />}>
+              <Route path="/signin" element={<Signin onSignIn={onSignIn} />} />
+              <Route path="/signup" element={<Signup onSignIn={onSignIn} />} />
             </Route>
           </Routes>
         </Router>

@@ -1,6 +1,6 @@
-import React, { lazy, Suspense } from "react";
-import { BrowserRouter, useHistory } from "react-router-dom";
-import { Router, Routes, Route } from "react-router-dom";
+import React, { lazy, Suspense, useState, useEffect } from "react";
+import { Router, Routes, Route, Navigate } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import {
   StylesProvider,
   createGenerateClassName,
@@ -11,28 +11,41 @@ import Progress from "./components/Progress";
 
 const MarketingLazy = lazy(() => import("./components/MarketingApp"));
 const AuthLazy = lazy(() => import("./components/AuthApp"));
+const DashboardLazy = lazy(() => import("./components/DashboardApp"));
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "co",
 });
 
+const history = createBrowserHistory();
+
 const App = () => {
-  const history = useHistory();
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    if (isSignedIn) history.push("/dashboard");
+  }, [isSignedIn]);
+
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <StylesProvider generateClassName={generateClassName}>
-        <Header />
+        <Header signedIn={isSignedIn} onSignOut={() => setIsSignedIn(false)} />
         <Suspense fallback={<Progress />}>
-          <Router history={history}>
-            <Routes>
-              <Route path="/" element={<MarketingLazy />}>
-                <Route path="/auth" element={<AuthLazy />} />
+          <Routes>
+            <Route path="/" element={<MarketingLazy />}>
+              <Route
+                path="auth"
+                element={<AuthLazy onSignIn={() => setIsSignedIn(true)} />}
+              />
+              <Route path="dashboard">
+                {!isSignedIn && <Navigate to="/"/>}
+                {isSignedIn && <DashboardLazy />}
               </Route>
-            </Routes>
-          </Router>
+            </Route>
+          </Routes>
         </Suspense>
       </StylesProvider>
-    </BrowserRouter>
+    </Router>
   );
 };
 

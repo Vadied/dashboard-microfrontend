@@ -5,16 +5,18 @@ const commonConfig = require("./webpack.common");
 const domain = process.env.PRODUCTION_DOMAIN;
 const config = {
   mode: "production",
-  output: { filename: "[name].[contenthash].js" },
+  output: {
+    filename: "[name].[contenthash].js",
+    publicPath: "/auth/latest/",
+  },
   plugins: [
     new ModuleFederationPlugin({
-      name: "container",
-      remotes: {
-        auth: `auth@${domain}/auth/remoteEntry.js`,
-        marketing: `marketing@${domain}/marketing/remoteEntry.js`,
-        dashboard: `dashboard@${domain}/dashboard/remoteEntry.js`,
+      name: "dashboard",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./DashboardApp": "./src/bootstrap",
       },
-      shared: ["react", "react-dom"],
+      shared: ["vue"],
     }),
   ],
 };
